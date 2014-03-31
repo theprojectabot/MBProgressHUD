@@ -5,6 +5,8 @@
 //
 
 #import "MBProgressHUD.h"
+#import "CDActivityIndicatorView.h"
+
 #import <tgmath.h>
 
 
@@ -477,15 +479,18 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 - (void)updateIndicators {
 	
-	BOOL isActivityIndicator = [indicator isKindOfClass:[UIActivityIndicatorView class]];
+	BOOL isActivityIndicator = [indicator isKindOfClass:[CDActivityIndicatorView class]];
 	BOOL isRoundIndicator = [indicator isKindOfClass:[MBRoundProgressView class]];
 	
 	if (mode == MBProgressHUDModeIndeterminate &&  !isActivityIndicator) {
 		// Update to indeterminate indicator
 		[indicator removeFromSuperview];
-		self.indicator = MB_AUTORELEASE([[UIActivityIndicatorView alloc]
-										 initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]);
-		[(UIActivityIndicatorView *)indicator startAnimating];
+//		//self.indicator = MB_AUTORELEASE([[UIActivityIndicatorView alloc]
+//										 initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge]);
+        
+        self.indicator = [[CDActivityIndicatorView alloc] initWithImage:[UIImage imageNamed:@"refresh-1.png"]];
+        
+		[(CDActivityIndicatorView *)indicator startAnimating];
 		[self addSubview:indicator];
 	}
 	else if (mode == MBProgressHUDModeDeterminateHorizontalBar) {
